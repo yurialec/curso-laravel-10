@@ -21,6 +21,9 @@ class StoreUpdateSupport extends FormRequest
      */
     public function rules(): array
     {
+        /**
+         * Regras de validação das informações
+         */
         $rules = [
             'subject' => 'required|min:3|max:255|unique:supports',
             'body' => [
@@ -30,8 +33,11 @@ class StoreUpdateSupport extends FormRequest
             ]
         ];
 
+        /**
+         * Caso o metodo seja de edicao, ele altera as validacoes
+         */
         if ($this->method() === 'PUT') {
-            
+
             $rules['subject'] = [
                 'required',
                 'min:3',

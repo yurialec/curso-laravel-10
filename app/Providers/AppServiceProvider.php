@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\SupportRepositoryInterface;
 use App\Repositories\SupportEloquentORM;
-use App\Repositories\SupportRepositoryInterface;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 

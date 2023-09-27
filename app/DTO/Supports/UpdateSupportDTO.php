@@ -33,10 +33,10 @@ class UpdateSupportDTO
      * @param StoreUpdateSupport $request Instacia um novo objeto com com as informacoes do formulario
      * @return self
      */
-    public static function makeFromRequest(StoreUpdateSupport $request): self
+    public static function makeFromRequest(StoreUpdateSupport $request, int $id): self
     {
         return new self(
-            $request->id,
+            $id ?? $request->id,
             $request->subject,
             SupportStatus::A,
             $request->body

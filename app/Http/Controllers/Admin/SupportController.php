@@ -34,9 +34,11 @@ class SupportController extends Controller
             filter: $request->filter,
         );
 
+        $total = $supports->total();
+
         $filters = ['filter' => $request->get('filter', '')];
 
-        return view('Admin.Supports.index', compact('supports', 'filters'));
+        return view('Admin.Supports.index', compact('supports', 'filters', 'total'));
     }
 
     public function create()
@@ -53,7 +55,7 @@ class SupportController extends Controller
     public function store(StoreUpdateSupport $request)
     {
         $this->service->create(CreateSupportDTO::makeFromRequest($request));
-        return redirect()->route('supports.index');
+        return redirect()->route('supports.index')->with('success', 'Dúvida cadastrada com sucesso!');
     }
 
     public function show(int $id)

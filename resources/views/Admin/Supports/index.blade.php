@@ -20,26 +20,30 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table table-dark">
                 @foreach ($supports->items() as $support)
                     <tr>
                         <td>{{ $support->id }}</td>
                         <td>{{ $support->subject }}</td>
                         <td>{{ $support->body }}</td>
-                        <td>{{ $support->status }}</td>
+                        <td>{{ getStatusSupport($support->status) }}</td>
                         <td>
-                            <a href="{{ route('supports.show', $support->id) }}"
-                                class="btn btn-sm btn-info rounded-pill">Visualizar</a>
-                            <a href="{{ route('supports.edit', $support->id) }}"
-                                class="btn btn-sm btn-warning rounded-pill">Editar</a>
+                            <a style="text-decoration: none;" href="{{ route('supports.show', $support->id) }}">
+                                <i class="bi bi-eye"></i>
+                            </a>
+
+                            <a style="text-decoration: none;" href="{{ route('supports.edit', $support->id) }}">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+
                             <form action="{{ route('supports.destroy', $support->id) }}" method="POST" class="d-inline"
                                 id="delete-form-{{ $support->id }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-sm btn-danger rounded-pill"
+                                <a href="#" class="text-danger" style="text-decoration: none;"
                                     onclick="confirmDelete({{ $support->id }}, '{{ $support->subject }}')">
-                                    Excluir
-                                </button>
+                                    <i class="bi bi-trash3"></i>
+                                </a>
                             </form>
                         </td>
                     </tr>

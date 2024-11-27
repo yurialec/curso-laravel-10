@@ -201,9 +201,6 @@
                 </div>
             </div>
         </div>
-        <footer>
-            #default footer
-        </footer>
     </section>
 </body>
 <script>

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Attribute;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +20,7 @@ class ReplySupport extends Model
         'content',
     ];
 
+    protected $with = ['user'];
 
     public function user()
     {

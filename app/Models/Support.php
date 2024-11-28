@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SupportStatus;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,6 +24,13 @@ class Support extends Model
     {
         return Attribute::make(
             set: fn(SupportStatus $status) => $status->name,
+        );
+    }
+
+    public function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn(string $createdAt) => Carbon::make($createdAt)->format('d/m/Y H:m')
         );
     }
 

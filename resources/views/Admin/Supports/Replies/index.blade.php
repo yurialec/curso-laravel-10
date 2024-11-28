@@ -2,13 +2,6 @@
 
 @section('content')
 
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-
 <div class="details-container rounded-border p-4">
     <h1 class="fs-4 text-light mb-4">Detalhes da Dúvida</h1>
 
@@ -26,6 +19,27 @@
             <strong>Status:</strong> {{ $support->status }}
         </li>
     </ul>
+
+    <div>
+        <h3 class="mt-4">Respostas</h3>
+        @if(empty($replies))
+            <p class="text-muted">Ainda não há respostas para esta dúvida.</p>
+        @else
+            <ul class="list-group">
+                @foreach ($replies as $reply)
+                    <li class="list-group-item bg-dark text-light mb-2">
+                        <p>{{ $reply['content'] }}</p>
+                        <small class="text-muted">
+                            <small class="text-light">Respondido em
+                                {{$reply['created_at']}}
+                                por {{ $reply['user']['name'] }}
+                            </small>
+                        </small>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+    </div>
 
     <div class="mb-4">
         <h2 class="fs-5 text-light">Responder</h2>

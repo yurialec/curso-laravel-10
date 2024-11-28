@@ -27,7 +27,7 @@ class ReplySupportController extends Controller
         }
 
         $replies = $this->replyService->getAllBySupportId($id);
-
+        
         return view('Admin.Supports.Replies.index', compact('support', 'replies'));
     }
 
@@ -38,7 +38,7 @@ class ReplySupportController extends Controller
     {
         $this->replyService->createNew(CreateReplyDTO::makeFromRequest($request));
         $supportId = $request->support_id;
-        
+
         session()->flash('success', 'Resposta cadastrada com sucesso!');
 
         return redirect()->route('replies.index', ['id' => $supportId]);

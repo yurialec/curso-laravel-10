@@ -49,23 +49,13 @@
                         <td> ASDFG </td>
                         <td>Lista de usuários</td>
                         <td>
-                            <a style="text-decoration: none;" href="{{ route('supports.show', $support->id) }}">
+                            <a style="text-decoration: none;" href="{{ route('replies.index', $support->id) }}">
                                 <i class="bi bi-eye"></i>
                             </a>
 
                             <a style="text-decoration: none;" href="{{ route('supports.edit', $support->id) }}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-
-                            <form action="{{ route('supports.destroy', $support->id) }}" method="POST" class="d-inline"
-                                id="delete-form-{{ $support->id }}">
-                                @csrf
-                                @method('DELETE')
-                                <a href="#" class="text-danger" style="text-decoration: none;"
-                                    onclick="confirmDelete({{ $support->id }}, '{{ $support->subject }}')">
-                                    <i class="bi bi-trash3"></i>
-                                </a>
-                            </form>
                         </td>
                     </tr>
                 @endforeach

@@ -6,7 +6,6 @@ use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateSupport;
-use App\Models\Support;
 use App\Services\SupportService;
 use Illuminate\Http\Request;
 
@@ -55,10 +54,12 @@ class SupportController extends Controller
     public function store(StoreUpdateSupport $request)
     {
         $this->service->create(CreateSupportDTO::makeFromRequest($request));
-        return redirect()->route('supports.index')->with('success', 'Dúvida cadastrada com sucesso!');
+        return redirect()
+            ->route('supports.index')
+            ->with('success', 'Dúvida cadastrada com sucesso!');
     }
 
-    public function show(int $id)
+    public function show($id)
     {
         if (!$support = $this->service->findOne($id)) {
             return back();
@@ -67,7 +68,7 @@ class SupportController extends Controller
         return view('Admin.Supports.show', compact('support'));
     }
 
-    public function edit(int $id)
+    public function edit($id)
     {
         if (!$support = $this->service->findOne($id)) {
             return back();
@@ -76,9 +77,9 @@ class SupportController extends Controller
         return view('Admin.Supports.edit', compact('support'));
     }
 
-    public function update(StoreUpdateSupport $request, Support $support)
+    public function update(StoreUpdateSupport $request, $id)
     {
-        $support = $this->service->update(UpdateSupportDTO::makeFromRequest($request));
+        $support = $this->service->update(UpdateSupportDTO::makeFromRequest($request, $id));
 
         if (!$support) {
             return back();

@@ -62,13 +62,13 @@ class SupportService
     }
 
     /** Traz somente um registro @param integer $id @return stdClass|null */
-    public function findOne(int $id): stdClass|null
+    public function findOne($id): stdClass|null
     {
         return $this->repository->findOne($id);
     }
 
     /** Deletar registro @param integer $id @return void */
-    public function delete(int $id)
+    public function delete($id)
     {
         return $this->repository->delete($id);
     }

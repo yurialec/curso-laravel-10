@@ -58,7 +58,7 @@ class SupportEloquentORM implements SupportRepositoryInterface
     }
 
     /** Undocumented function @param integer $id @return stdClass|null */
-    public function findOne(int $id): stdClass|null
+    public function findOne($id): stdClass|null
     {
         $support = $this->model->find($id);
 
@@ -70,7 +70,7 @@ class SupportEloquentORM implements SupportRepositoryInterface
     }
 
     /** Undocumented function @param integer $id @return void */
-    public function delete(int $id): void
+    public function delete($id): void
     {
         $this->model->findOrFail($id)->delete();
     }

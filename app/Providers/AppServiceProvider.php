@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Interfaces\SupportRepositoryInterface;
+use App\Models\Support;
+use App\Observers\SupportObserver;
 use App\Repositories\SupportEloquentORM;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -26,5 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        Support::observe(SupportObserver::class);
     }
 }

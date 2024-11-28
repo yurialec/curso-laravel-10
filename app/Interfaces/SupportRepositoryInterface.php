@@ -25,10 +25,10 @@ interface SupportRepositoryInterface
     public function getAll(string $filter = null): array;
 
     /** Localizar registro @param integer $id @return stdClass|null */
-    public function findOne(int $id): stdClass|null;
+    public function findOne($id): stdClass|null;
 
     /** Deletar Registro @param integer $id @return void */
-    public function delete(int $id): void;
+    public function delete($id): void;
 
     /** Criar novo registro @param CreateSupportDTO $dto @return stdClass */
     public function create(CreateSupportDTO $dto): stdClass;

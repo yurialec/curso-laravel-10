@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Interfaces\ReplyRepositoryInterface;
 use App\Interfaces\SupportRepositoryInterface;
 use App\Models\Support;
 use App\Observers\SupportObserver;
+use App\Repositories\ReplySupportRepository;
 use App\Repositories\SupportEloquentORM;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
             SupportRepositoryInterface::class,
             SupportEloquentORM::class
         );
+
+        $this->app->bind(ReplyRepositoryInterface::class, ReplySupportRepository::class);
     }
 
     /**

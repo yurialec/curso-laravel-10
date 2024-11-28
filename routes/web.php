@@ -30,7 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/supports/show/{id}/replies', [ReplySupportController::class, 'index'])->name('replies.index');
+    Route::get('/supports/{id}/replies', [ReplySupportController::class, 'index'])->name('replies.index');
+    Route::post('/supports/replies', [ReplySupportController::class, 'store'])->name('replies.store');
 
     Route::delete('/supports/{id}', [SupportController::class, 'destroy'])->name('supports.destroy');
     Route::put('/supports/{id}', [SupportController::class, 'update'])->name('supports.update');

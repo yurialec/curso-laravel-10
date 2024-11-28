@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DTO\Replies\CreateReplyDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreReplySupportRequest;
+use App\Services\ReplySupportService;
 use App\Services\SupportService;
 use Illuminate\Http\Request;
 
 class ReplySupportController extends Controller
 {
-    public function __construct(protected SupportService $service)
-    {
+    public function __construct(
+        protected SupportService $SupportService,
+        protected ReplySupportService $replyService,
+    ) {
     }
 
     /**
@@ -17,27 +22,26 @@ class ReplySupportController extends Controller
      */
     public function index(string $id)
     {
-        if (!$support = $this->service->findOne($id)) {
+        if (!$support = $this->SupportService->findOne($id)) {
             return back();
         }
 
-        return view('Admin.Supports.Replies.index', compact('support'));
-    }
+        $replies = $this->replyService->getAllBySupportId($id);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return view('Admin.Supports.Replies.index', compact('support', 'replies'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreReplySupportRequest $request)
     {
-        //
+        $this->replyService->createNew(CreateReplyDTO::makeFromRequest($request));
+        $supportId = $request->support_id;
+        
+        session()->flash('success', 'Resposta cadastrada com sucesso!');
+
+        return redirect()->route('replies.index', ['id' => $supportId]);
     }
 
     /**

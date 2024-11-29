@@ -27,14 +27,21 @@
         @else
             <ul class="list-group">
                 @foreach ($replies as $reply)
-                    <li class="list-group-item bg-dark text-light mb-2">
-                        <p>{{ $reply['content'] }}</p>
-                        <small class="text-muted">
-                            <small class="text-light">Respondido em
-                                {{$reply['created_at']}}
-                                por {{ $reply['user']['name'] }}
+                    <li class="list-group-item bg-dark text-light mb-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <p>{{ $reply['content'] }}</p>
+                            <small class="text-muted">
+                                <small class="text-light">Respondido em
+                                    {{ \Carbon\Carbon::parse($reply['created_at'])->format('d/m/Y H:i') }}
+                                    por {{ $reply['user']['name'] }}
+                                </small>
                             </small>
-                        </small>
+                        </div>
+                        <form action="{{ route('replies.destroy', [$support->id, $reply['id']]) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                        </form>
                     </li>
                 @endforeach
             </ul>
@@ -45,12 +52,20 @@
         <h2 class="fs-5 text-light">Responder</h2>
         <form action="{{ route('replies.store') }}" method="POST" class="mt-3">
             @csrf
+            <input type="hidden" name="support_id" value="{{ $support->id }}">
+
             <div class="mb-3">
-                <label for="body" class="form-label text-light">Mensagem</label>
-                <input type="hidden" name="support_id" value="{{$support->id}}">
-                <textarea name="content" id="content" class="form-control bg-dark text-light" rows="5"
-                    placeholder="Digite sua resposta aqui..." required></textarea>
+                <label for="content" class="form-label text-light">Mensagem</label>
+                <textarea name="content" id="content"
+                    class="form-control bg-dark text-light @error('content') is-invalid @enderror" rows="5"
+                    placeholder="Digite sua resposta aqui...">{{ old('content') }}</textarea>
+                @error('content')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
+
             <button type="submit" class="btn btn-success btn-sm">Enviar Resposta</button>
         </form>
     </div>

@@ -17,9 +17,6 @@ class ReplySupportController extends Controller
     ) {
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(string $id)
     {
         if (!$support = $this->SupportService->findOne($id)) {
@@ -27,52 +24,26 @@ class ReplySupportController extends Controller
         }
 
         $replies = $this->replyService->getAllBySupportId($id);
-        
+
         return view('Admin.Supports.Replies.index', compact('support', 'replies'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreReplySupportRequest $request)
     {
         $this->replyService->createNew(CreateReplyDTO::makeFromRequest($request));
         $supportId = $request->support_id;
 
         session()->flash('success', 'Resposta cadastrada com sucesso!');
-
         return redirect()->route('replies.index', ['id' => $supportId]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy($supportId, $id)
     {
-        //
-    }
+        $this->replyService->delete($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        session()->flash('success', 'Resposta excluida com sucesso!');
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()
+            ->route('replies.index', ['id' => $supportId]);
     }
 }

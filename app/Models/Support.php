@@ -27,13 +27,6 @@ class Support extends Model
         );
     }
 
-    public function createdAt(): Attribute
-    {
-        return Attribute::make(
-            get: fn(string $createdAt) => Carbon::make($createdAt)->format('d/m/Y H:m')
-        );
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);

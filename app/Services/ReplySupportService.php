@@ -21,4 +21,9 @@ class ReplySupportService
     {
         $this->repository->createNew($dto);
     }
+
+    public function delete($id): bool
+    {
+        return $this->repository->delete($id);
+    }
 }

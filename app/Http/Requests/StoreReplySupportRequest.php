@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreReplySupportRequest extends FormRequest
 {
@@ -26,12 +25,23 @@ class StoreReplySupportRequest extends FormRequest
             'content' => [
                 'required',
                 'min:3',
-                'max:10000',
+                'max:10000'
             ],
             'support_id' => [
                 'required',
-                Rule::exists('supports', 'id'),
-            ],
+                'exists:supports,id'
+            ]
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'content.required' => 'O campo mensagem é obrigatório.',
+            'content.min' => 'A mensagem deve ter no mínimo :min caracteres.',
+            'content.max' => 'A mensagem deve ter no máximo :max caracteres.',
+            'support_id.required' => 'O ID do suporte é obrigatório.',
+            'support_id.exists' => 'O suporte informado não existe.',
         ];
     }
 }

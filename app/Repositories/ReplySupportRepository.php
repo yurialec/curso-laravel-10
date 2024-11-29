@@ -6,6 +6,8 @@ use App\DTO\Replies\CreateReplyDTO;
 use App\Interfaces\ReplyRepositoryInterface;
 use App\Models\ReplySupport;
 use Auth;
+use Exception;
+use Log;
 use stdClass;
 
 class ReplySupportRepository implements ReplyRepositoryInterface
@@ -32,5 +34,24 @@ class ReplySupportRepository implements ReplyRepositoryInterface
         $reply = $reply->with('user')->first();
 
         return (object) $reply->toArray();
+    }
+    
+    public function delete($id): bool
+    {
+        try {
+            $model = $this->model->find($id);
+
+            if (!$model) {
+                return false;
+            }
+
+            return (bool) $model->delete();
+        } catch (Exception $err) {
+            Log::error('Erro ao deletar registro', [
+                'error' => $err->getMessage(),
+                'id' => $id
+            ]);
+            return false;
+        }
     }
 }

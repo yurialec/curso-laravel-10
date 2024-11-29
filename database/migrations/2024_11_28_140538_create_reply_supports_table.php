@@ -12,10 +12,13 @@ return new class extends Migration {
     {
         Schema::create('replies_support', function (Blueprint $table) {
             $table->uuid('id')->primary();
+
             $table->uuid('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->uuid('support_id')->index();
-            $table->foreign('support_id')->references('id')->on('supports');
+            $table->foreign('support_id')->references('id')->on('supports')->onDelete('cascade');
+
             $table->text('content');
             $table->timestamps();
         });

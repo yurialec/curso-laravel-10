@@ -27,8 +27,8 @@ interface SupportRepositoryInterface
     /** Localizar registro @param integer $id @return stdClass|null */
     public function findOne($id): stdClass|null;
 
-    /** Deletar Registro @param integer $id @return void */
-    public function delete($id): void;
+    /** Deletar Registro @param integer $id @return bool */
+    public function delete($id): bool;
 
     /** Criar novo registro @param CreateSupportDTO $dto @return stdClass */
     public function create(CreateSupportDTO $dto): stdClass;

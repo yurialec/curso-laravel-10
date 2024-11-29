@@ -7,6 +7,7 @@ use App\Interfaces\ReplyRepositoryInterface;
 use App\Models\ReplySupport;
 use Auth;
 use Exception;
+use Gate;
 use Log;
 use stdClass;
 
@@ -35,17 +36,21 @@ class ReplySupportRepository implements ReplyRepositoryInterface
 
         return (object) $reply->toArray();
     }
-    
+
     public function delete($id): bool
     {
         try {
-            $model = $this->model->find($id);
+            $support = $this->model->find($id);
 
-            if (!$model) {
+            if (!$support) {
                 return false;
             }
 
-            return (bool) $model->delete();
+            if (Gate::denies('owner', $support->user->id)) {
+                abort(403, 'Not Authorized');
+            }
+
+            return (bool) $support->delete();
         } catch (Exception $err) {
             Log::error('Erro ao deletar registro', [
                 'error' => $err->getMessage(),

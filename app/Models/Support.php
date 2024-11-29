@@ -20,6 +20,8 @@ class Support extends Model
         'status'
     ];
 
+    protected $with = ['user', 'replies'];
+
     public function status(): Attribute
     {
         return Attribute::make(

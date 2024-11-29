@@ -8,6 +8,8 @@ use App\Interfaces\PaginationInterface;
 use App\Interfaces\SupportRepositoryInterface;
 use App\Models\Support;
 use App\Presentation\PaginationPresenter;
+use Exception;
+use Illuminate\Support\Facades\Gate;
 use stdClass;
 
 /**
@@ -70,9 +72,26 @@ class SupportEloquentORM implements SupportRepositoryInterface
     }
 
     /** Undocumented function @param integer $id @return void */
-    public function delete($id): void
+    public function delete($id): bool
     {
-        $this->model->findOrFail($id)->delete();
+        try {
+            $support = $this->model->find($id);
+
+            if (!$support) {
+                return false;
+            }
+
+            if (Gate::denies('owner', $support->user->id)) {
+                abort(403, 'Not Authorized');
+            }
+
+            $support->replies()->delete();
+
+            return (bool) $support->delete();
+        } catch (Exception $err) {
+            Log::error('Erro ao deletar registro', ['error' => $err->getMessage(), 'id' => $id]);
+            return false;
+        }
     }
 
     /** Undocumented function @param CreateSupportDTO $dto @return stdClass */
@@ -92,9 +111,11 @@ class SupportEloquentORM implements SupportRepositoryInterface
             return null;
         }
 
-        $support->update(
-            (array) $dto
-        );
+        if (Gate::denies('owner', $support->user->id)) {
+            abort(403, 'Not Authorized');
+        }
+
+        $support->update((array) $dto);
 
         return (object) $support->toArray();
     }

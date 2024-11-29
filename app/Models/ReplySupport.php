@@ -20,7 +20,7 @@ class ReplySupport extends Model
         'content',
     ];
 
-    protected $with = ['user'];
+    protected $with = ['user', 'replies'];
 
     public function user()
     {

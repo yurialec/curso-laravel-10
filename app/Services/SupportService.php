@@ -6,6 +6,7 @@ use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
 use App\Interfaces\PaginationInterface;
 use App\Interfaces\SupportRepositoryInterface;
+use Gate;
 use stdClass;
 
 class SupportService
@@ -68,7 +69,7 @@ class SupportService
     }
 
     /** Deletar registro @param integer $id @return void */
-    public function delete($id)
+    public function delete($id): bool
     {
         return $this->repository->delete($id);
     }

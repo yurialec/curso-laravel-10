@@ -12,8 +12,8 @@
     <!-- Importação do arquivo CSS customizado -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -161,6 +161,34 @@
             color: #90ee90;
             opacity: 1;
         }
+
+        .circle-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .circle-initials {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            background-color: #2e2e2e;
+            color: #fff;
+            font-weight: bold;
+            font-size: 12px;
+            border: 2px solid #4682B4;
+            border-radius: 50%;
+            text-transform: uppercase;
+            position: relative;
+            margin-left: -10px;
+            z-index: 0;
+        }
+
+        .circle-initials:last-child {
+            margin-left: -15px;
+            z-index: 1;
+        }
     </style>
     <title>Supports</title>
 </head>
@@ -171,7 +199,7 @@
             @yield('header')
         </header>
         <div class="content">
-            @if(session('success'))
+            @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -215,7 +243,7 @@
         deleteModal.show();
     }
 
-    document.getElementById('confirm-delete-button').addEventListener('click', function () {
+    document.getElementById('confirm-delete-button').addEventListener('click', function() {
         if (deleteForm) {
             deleteForm.submit();
         }

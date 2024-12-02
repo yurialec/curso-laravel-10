@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
+use App\Enums\SupportStatus;
 use App\Interfaces\PaginationInterface;
 use App\Interfaces\SupportRepositoryInterface;
 use App\Models\Support;
@@ -34,6 +35,13 @@ class SupportEloquentORM implements SupportRepositoryInterface
     public function paginate(int $page = 1, int $totalPerPage = 15, string $filter = null): PaginationInterface
     {
         $result = $this->model
+            // ->with([
+            //     'replies' => function ($query) {
+            //         $query->limit(4);
+            //         $query->latest();
+            //     }
+            // ])
+            ->with('replies.user')
             ->where(function ($query) use ($filter) {
                 if ($filter) {
                     $query->where('subject', $filter);
@@ -118,5 +126,14 @@ class SupportEloquentORM implements SupportRepositoryInterface
         $support->update((array) $dto);
 
         return (object) $support->toArray();
+    }
+
+    public function updateStatus(string $id, SupportStatus $status): void
+    {
+        $this->model
+            ->where('id', $id)
+            ->update([
+                'status' => $status->name
+            ]);
     }
 }

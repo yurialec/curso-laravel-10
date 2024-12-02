@@ -4,6 +4,7 @@ namespace App\Interfaces;
 
 use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
+use App\Enums\SupportStatus;
 use stdClass;
 
 /**
@@ -35,4 +36,7 @@ interface SupportRepositoryInterface
 
     /** Atualizar Registro @param UpdateSupportDTO $dto @return stdClass|null */
     public function update(UpdateSupportDTO $dto): stdClass|null;
+
+    /** Alterar status so support @param string $id @param \App\Enums\SupportStatus $status @return void */
+    public function updateStatus(string $id, SupportStatus $status): void;
 }

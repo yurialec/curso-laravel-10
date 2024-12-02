@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
+use App\Enums\SupportStatus;
 use App\Interfaces\PaginationInterface;
 use App\Interfaces\SupportRepositoryInterface;
 use Gate;
@@ -72,5 +73,10 @@ class SupportService
     public function delete($id): bool
     {
         return $this->repository->delete($id);
+    }
+
+    public function updateStatus(string $id, SupportStatus $staus): void
+    {
+        $this->repository->updateStatus($id, $staus);
     }
 }

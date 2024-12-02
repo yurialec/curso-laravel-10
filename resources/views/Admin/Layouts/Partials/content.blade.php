@@ -43,12 +43,22 @@
                 @foreach ($supports->items() as $support)
                     <tr>
                         <td>{{ $support->subject }}</td>
-                        <td>{{$support->user['name']}}</td>
+                        <td>{{ $support->user['name'] }}</td>
                         <td>
                             <x-status-support :status="$support->status" />
                         </td>
                         <td> ASDFG </td>
-                        <td>Lista de usuários</td>
+                        <td>
+                            <div class="circle-group">
+                                @foreach ($support->replies as $reply)
+                                    @if ($loop->index < 4)
+                                        <div class="circle-initials">
+                                            {{ getInitials($reply['user']['name'] ?? '') }}
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </td>
                         <td>
                             <a style="text-decoration: none;" href="{{ route('replies.index', $support->id) }}">
                                 <i class="bi bi-eye"></i>
